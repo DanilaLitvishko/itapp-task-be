@@ -1,0 +1,10 @@
+export const JOIN = 'join';
+export const CHAT_MESSAGE = 'chat-message';
+export const NEW_USER = 'new-user';
+export const USER_QUIT = 'user-quit';
+export const ROOM_CREATED = 'room-created';
+export const ROOM_UPDATED = 'room-updated';
+export const NEW_POST = 'new-post';
+export const ROOM_CHANGE_ADMIN_STATUS = 'room-change-admin-status';
+export const NEW_COMMENT = 'new-comment';
+export const UPDATE_COMMENT = 'update-comment';

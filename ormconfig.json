@@ -1,0 +1,16 @@
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "postgres",
+    "database": "itapp-db",
+    "entities": ["entity/*.js"],
+    "synchronize": false,
+    "migrationsTableName": "custom_migration_table",
+    "migrations": ["migration/*.js"],
+    "cli": {
+        "entitiesDir": "src/modules/common/entities",
+        "migrationsDir": "database/migration"
+    }
+}
