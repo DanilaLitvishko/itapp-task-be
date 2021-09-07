@@ -2,7 +2,6 @@
 
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Repository } from 'sequelize-typescript';
 import { Op } from 'sequelize';
 import { User } from 'src/modules/common/entities/user.entity';
 import { LoginDto } from 'src/modules/common/dto/auth/login.dto';
@@ -26,10 +25,10 @@ import { UserResponseDto } from 'src/modules/common/dto/users/user-response.dto'
 import { AuthResponseDto } from 'src/modules/common/dto/auth/auth-response.dto';
 import { TokenDto } from 'src/modules/common/dto/auth/token.dto';
 import { ActivationDto } from 'src/modules/common/dto/auth/activation.dto';
-import { checkPassword} from 'src/utils/user.utils';
+import { checkPassword } from '../../../../utils/user.utils';
 import { ValidationException } from 'src/exceptions/custom-exceptions/validation-exeption';
 import { ValidationErrorDto } from 'src/validation/dto/validation-error.dto';
-import { PASSWORD_IS_INCORRECT, USER_IS_NOT_REGISTERED } from 'constants/validation-messages';
+import { PASSWORD_IS_INCORRECT, USER_IS_NOT_REGISTERED } from '../../../../../constants/validation-messages';
 import { ActivationLinkDto } from 'src/modules/common/dto/auth/activation-link.dto';
 import { checkIsMobile } from 'src/utils/request.utils';
 import { USERS_REPOSITORY } from 'src/modules/common/constants/repositories';

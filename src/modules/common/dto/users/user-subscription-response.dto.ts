@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/camelcase */
-
-import { ApiProperty, ApiResponseProperty } from '@nestjs/swagger';
 import Stripe from 'stripe';
 
 import { BaseOutputDto } from 'src/modules/base/dto/base-output.dto';
@@ -18,21 +16,15 @@ export class UserSubscriptionResponseDto extends BaseOutputDto {
     this.product = new ProductResponseDto(product);
   }
 
-  @ApiResponseProperty()
   readonly id: string;
 
-  @ApiResponseProperty()
   readonly status: string;
 
-  @ApiResponseProperty()
   readonly isCanceled: boolean;
 
-  @ApiResponseProperty()
   readonly startedAt: Date;
 
-  @ApiResponseProperty()
   readonly expiredAt: Date;
 
-  @ApiProperty()
   readonly product: ProductResponseDto;
 }

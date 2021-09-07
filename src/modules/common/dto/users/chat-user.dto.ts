@@ -1,7 +1,5 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 
-import { ApiResponseProperty } from '@nestjs/swagger';
-
 import { BaseOutputDto } from 'src/modules/base/dto/base-output.dto';
 import { User } from 'src/modules/common/entities/user.entity';
 
@@ -17,24 +15,17 @@ export class ChatUserDto extends BaseOutputDto {
     this.isAdmin = isAdmin;
   }
 
-  @ApiResponseProperty()
   readonly _id: number;
 
-  @ApiResponseProperty()
   readonly name: string;
 
-  @ApiResponseProperty()
   readonly firstName: string;
 
-  @ApiResponseProperty()
   readonly lastName: string;
 
-  @ApiResponseProperty()
   readonly email: string;
 
-  @ApiResponseProperty()
   readonly avatar: string;
 
-  @ApiResponseProperty()
   readonly isAdmin: boolean;
 }

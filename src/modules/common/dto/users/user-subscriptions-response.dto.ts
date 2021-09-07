@@ -1,5 +1,3 @@
-import { ApiResponseProperty } from '@nestjs/swagger';
-
 import { BaseOutputDto } from 'src/modules/base/dto/base-output.dto';
 import { User } from 'src/modules/common/entities/user.entity';
 import { UserResponseDto } from 'src/modules/common/dto/users/user-response.dto';
@@ -12,9 +10,7 @@ export class UserSubscriptionsResponseDto extends BaseOutputDto {
     this.subscriptions = subscriptions;
   }
 
-  @ApiResponseProperty({ type: [UserSubscriptionResponseDto] })
   readonly subscriptions: UserSubscriptionResponseDto[];
 
-  @ApiResponseProperty()
   readonly user: UserResponseDto;
 }

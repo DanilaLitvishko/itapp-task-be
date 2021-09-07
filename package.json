@@ -31,15 +31,20 @@
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+    "cron": "^1.8.2",
     "dotenv": "^10.0.0",
     "helmet": "^4.6.0",
+    "mailgun": "^0.5.0",
+    "nestjs-stripe": "^0.4.1",
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "sequelize": "^6.6.5",
+    "shortid": "^2.2.16",
     "stripe": "^8.174.0",
-    "typeorm": "^0.2.37"
+    "typeorm": "^0.2.37",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

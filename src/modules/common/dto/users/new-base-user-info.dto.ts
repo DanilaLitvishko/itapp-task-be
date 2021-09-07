@@ -1,5 +1,3 @@
-import { ApiResponseProperty } from '@nestjs/swagger';
-
 import { User } from 'src/modules/common/entities/users/new-user.entity';
 
 export class BaseUserInfoDto {
@@ -12,21 +10,15 @@ export class BaseUserInfoDto {
     this.email = user.email;
   }
 
-  @ApiResponseProperty()
   readonly id: number;
 
-  @ApiResponseProperty()
   readonly fullName: string;
 
-  @ApiResponseProperty()
   readonly firstName: string;
 
-  @ApiResponseProperty()
   readonly lastName: string;
 
-  @ApiResponseProperty()
   readonly avatar: string;
 
-  @ApiResponseProperty()
   readonly email: string;
 }

@@ -1,5 +1,3 @@
-import { ApiResponseProperty } from '@nestjs/swagger';
-
 import { UserResponseDto } from 'src/modules/common/dto/users/user-response.dto';
 
 export class AuthResponseDto {
@@ -9,12 +7,9 @@ export class AuthResponseDto {
     this.isFirstSignIn = isFirstSignIn;
   }
 
-  @ApiResponseProperty()
   readonly accessToken: string;
 
-  @ApiResponseProperty()
   readonly isFirstSignIn: boolean;
-
-  @ApiResponseProperty()
+  
   readonly user: UserResponseDto;
 }
