@@ -168,7 +168,7 @@ export class UsersService extends BaseService<User, UserResponseDto> {
       const activationCode = uuidv4({ id: user.id, createdAt: user.createdAt });
       const userData = await this.updateRecord({ activationCode }, user.id);
 
-      await this.userTasksService.sendActivationLink(userData.email, activationCode);
+      await this.userTasksService.sendActivationLink(userData.username, activationCode);
     } catch (err) {
       throw new HttpException(USER_NOT_FOUND, HttpStatus.UNPROCESSABLE_ENTITY);
     }

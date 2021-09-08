@@ -1,12 +1,13 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_json"] }] */
 
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Op } from 'sequelize';
 import { User } from 'src/modules/common/entities/user.entity';
 import { LoginDto } from 'src/modules/common/dto/auth/login.dto';
 import { SignUpDto } from 'src/modules/common/dto/auth/sign-up.dto';
-import { UsersService } from 'src/modules/common/services/users/users.service';
+import { UsersService } from '../users/users.service';
 import { TokenPayloadDto } from 'src/modules/common/dto/auth/token-payload.dto';
 import {
   ACCOUNT_IS_ALREADY_VERIFIED,
@@ -30,13 +31,11 @@ import { ValidationException } from 'src/exceptions/custom-exceptions/validation
 import { ValidationErrorDto } from 'src/validation/dto/validation-error.dto';
 import { PASSWORD_IS_INCORRECT, USER_IS_NOT_REGISTERED } from '../../../../../constants/validation-messages';
 import { ActivationLinkDto } from 'src/modules/common/dto/auth/activation-link.dto';
-import { checkIsMobile } from 'src/utils/request.utils';
-import { USERS_REPOSITORY } from 'src/modules/common/constants/repositories';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject(USERS_REPOSITORY) private readonly usersRepository: Repository<User>,
+    @Inject() private readonly usersRepository: Repository<User>,
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
   ) {}
@@ -44,11 +43,6 @@ export class AuthService {
   async signUp(signUpDto: SignUpDto): Promise<AuthResponseDto | boolean> {
     try {
       const user = await this.usersService.createRecord({ ...signUpDto });
-
-      if (checkIsMobile()) {
-        return this.sendAuthResponse(user);
-      }
-
       return this.sendAuthResponse(user);
     } catch (err) {
       throw new HttpException(err, HttpStatus.BAD_REQUEST);
@@ -56,7 +50,7 @@ export class AuthService {
   }
 
   async login(loginDto: LoginDto): Promise<AuthResponseDto> {
-    const user = await this.usersRepository.findOne<User>({
+    const user = await this.usersRepository.findOne({
       where: { email: { [Op.iLike]: loginDto.email } },
     });
 
@@ -73,12 +67,7 @@ export class AuthService {
         );
       }
 
-      if (!user.isActive) {
-        throw new HttpException(
-          YOUR_ACCOUNT_HAS_BEEN_BLOCKED,
-          HttpStatus.FORBIDDEN,
-        );
-      } else if (user.isNew) {
+      if (!user.isConfirm) {
         throw new HttpException(ACCOUNT_IS_NOT_VERIFIED, HttpStatus.FORBIDDEN);
       }
 
@@ -94,7 +83,7 @@ export class AuthService {
   async checkToken(tokenDto: TokenDto): Promise<AuthResponseDto> {
     const { id, iat, exp } = await this.jwtService.verify(tokenDto.accessToken);
 
-    const user = await this.usersRepository.findByPk<User>(id);
+    const user = await this.usersRepository.findOne(id);
 
     if (!user) {
       throw new HttpException(
@@ -103,16 +92,16 @@ export class AuthService {
       );
     }
 
-    if (
-      !user.accessTokenCreatedAt ||
-      !(iat * 1000 === user.accessTokenCreatedAt.getTime()) ||
-      iat >= exp
-    ) {
-      throw new HttpException(
-        TOKEN_EXPIRATION_ERROR_MESSAGE,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
+    // if (
+    //   !user.accessTokenCreatedAt ||
+    //   !(iat * 1000 === user.accessTokenCreatedAt.getTime()) ||
+    //   iat >= exp
+    // ) {
+    //   throw new HttpException(
+    //     TOKEN_EXPIRATION_ERROR_MESSAGE,
+    //     HttpStatus.BAD_REQUEST,
+    //   );
+    // }
 
     return this.sendAuthResponse(user);
   }
@@ -121,7 +110,7 @@ export class AuthService {
     const condition = {
       where: { activationCode: activationDto.activationCode },
     };
-    const user = await this.usersRepository.findOne<User>(condition);
+    const user = await this.usersRepository.findOne(condition);
 
     if (!user) {
       throw new HttpException(
@@ -150,13 +139,13 @@ export class AuthService {
     const condition = {
       where: { email: activationLink.email },
     };
-    const user = await this.usersRepository.findOne<User>(condition);
+    const user = await this.usersRepository.findOne(condition);
 
     if (!user) {
       throw new HttpException(USER_NOT_FOUND, HttpStatus.BAD_REQUEST);
     }
 
-    if (!user.isNew) {
+    if (user.isConfirm) {
       throw new HttpException(
         ACCOUNT_IS_ALREADY_VERIFIED,
         HttpStatus.BAD_REQUEST,

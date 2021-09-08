@@ -1,5 +1,4 @@
 import { Inject, Injectable } from '@nestjs/common';
-
 import { User } from '../../entities/user.entity';
 import { createESUser } from 'src/modules/common/elastic-search/users/user';
 import { CronJob } from 'cron';
