@@ -6,7 +6,7 @@
     "username": "postgres",
     "password": "postgres",
     "database": "itapp-db",
-    "entities": ["dist/src/*/*/entity/*.js"],
+    "entities": ["dist/src/**/**/entities/**/*.entity{.js, .ts}"],
     "migrations": ["dist/database/migration/*.js"],
     "cli": {
         "migrationsDir": "database/migration"

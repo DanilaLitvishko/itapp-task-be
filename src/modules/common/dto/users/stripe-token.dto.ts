@@ -1,7 +1,7 @@
 import { IsOptional, IsDefined } from 'class-validator';
 import { Expose } from 'class-transformer';
 
-import { BaseInputDto } from 'src/modules/base/dto/base-input.dto';
+import { BaseInputDto } from '../../base/dto/base-input.dto';
 
 export class StripeTokenDto extends BaseInputDto {
   @Expose()

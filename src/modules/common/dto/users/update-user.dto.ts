@@ -12,7 +12,7 @@ import { Expose } from 'class-transformer';
 
 import { ArrayHasAnyValues } from 'src/validation/custom-class-validators/array-has-any-values';
 import { ROLE_ADMIN, ROLE_PREMIUM, ROLE_USER } from 'constants/roles';
-import { BaseInputDto } from 'src/modules/base/dto/base-input.dto';
+import { BaseInputDto } from '../../base/dto/base-input.dto';
 
 export class UpdateUserDto extends BaseInputDto {
   @Expose()

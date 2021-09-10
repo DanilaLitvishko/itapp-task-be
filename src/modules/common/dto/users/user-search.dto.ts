@@ -1,4 +1,4 @@
-import { BaseOutputDto } from 'src/modules/base/dto/base-output.dto';
+import { BaseOutputDto } from '../../base/dto/base-output.dto';
 import { ContactUserResponseDto } from 'src/modules/common/dto/users/contact-user-response.dto';
 import { ChatUserDto } from 'src/modules/common/dto/users/chat-user.dto';
 

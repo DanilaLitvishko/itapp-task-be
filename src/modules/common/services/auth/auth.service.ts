@@ -4,7 +4,7 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Op } from 'sequelize';
-import { User } from 'src/modules/common/entities/user.entity';
+import { User } from 'src/modules/common/entities/users/user.entity';
 import { LoginDto } from 'src/modules/common/dto/auth/login.dto';
 import { SignUpDto } from 'src/modules/common/dto/auth/sign-up.dto';
 import { UsersService } from '../users/users.service';
@@ -13,14 +13,9 @@ import {
   ACCOUNT_IS_ALREADY_VERIFIED,
   ACCOUNT_IS_NOT_VERIFIED,
   ACTIVATION_CODE_ERROR_MESSAGE,
-  SIGNUP_ERROR_MESSAGE,
   TOKEN_VERIFICATION_ERROR_MESSAGE,
-  YOUR_ACCOUNT_HAS_BEEN_BLOCKED,
   USER_NOT_FOUND,
-  RECOVERY_CODE_IS_INVALID,
   FAILED_DUE_TO_VALIDATION_ERRORS,
-  DONT_PROVIDE_EMAIL_FOR_SIGN_UP,
-  TOKEN_EXPIRATION_ERROR_MESSAGE,
 } from 'constants/messages';
 import { UserResponseDto } from 'src/modules/common/dto/users/user-response.dto';
 import { AuthResponseDto } from 'src/modules/common/dto/auth/auth-response.dto';
@@ -29,13 +24,19 @@ import { ActivationDto } from 'src/modules/common/dto/auth/activation.dto';
 import { checkPassword } from '../../../../utils/user.utils';
 import { ValidationException } from 'src/exceptions/custom-exceptions/validation-exeption';
 import { ValidationErrorDto } from 'src/validation/dto/validation-error.dto';
-import { PASSWORD_IS_INCORRECT, USER_IS_NOT_REGISTERED } from '../../../../../constants/validation-messages';
+import {
+  PASSWORD_IS_INCORRECT,
+  USER_IS_NOT_REGISTERED,
+} from '../../../../../constants/validation-messages';
 import { ActivationLinkDto } from 'src/modules/common/dto/auth/activation-link.dto';
+import { UsersRepository } from '../../repositories/users/users.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject() private readonly usersRepository: Repository<User>,
+    @InjectRepository(UsersRepository) 
+    private readonly usersRepository: UsersRepository,
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
   ) {}
@@ -81,7 +82,7 @@ export class AuthService {
   }
 
   async checkToken(tokenDto: TokenDto): Promise<AuthResponseDto> {
-    const { id, iat, exp } = await this.jwtService.verify(tokenDto.accessToken);
+    const { id } = await this.jwtService.verify(tokenDto.accessToken);
 
     const user = await this.usersRepository.findOne(id);
 

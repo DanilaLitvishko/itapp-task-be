@@ -1,9 +1,8 @@
-import { User } from 'src/modules/common/entities/users/user.entity';
-import { USERS_REPOSITORY } from 'src/modules/common/constants/repositories';
+import { User } from '../../entities/users/user.entity';
 
 export const usersProviders = [
   {
-    provide: USERS_REPOSITORY,
+    provide: 'USERS_REPOSITORY',
     useValue: User,
   },
 ];

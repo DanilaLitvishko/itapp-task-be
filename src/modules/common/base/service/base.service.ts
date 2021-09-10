@@ -1,5 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { DeleteResult, Repository } from 'typeorm';
+import { Connection, DeleteResult, EntityTarget, Repository } from 'typeorm';
 
 import { BaseInputDto } from '../../base/dto/base-input.dto';
 import { BaseOutputDto } from '../../base/dto/base-output.dto';
@@ -8,10 +8,7 @@ type Instantiable<T = any> = new (...args: any[]) => T;
 
 @Injectable()
 export abstract class BaseService<Entity, T extends BaseOutputDto> {
-  constructor(
-    public repository: Repository<Entity>,
-    public EntityModel: Instantiable,
-  ) {}
+  constructor(public repository: Repository<Entity>) {}
 
   async find(
     inputDto: BaseInputDto,
@@ -62,8 +59,8 @@ export abstract class BaseService<Entity, T extends BaseOutputDto> {
   }
 
   async createRecord(createDto: BaseInputDto): Promise<Entity> {
-    const entityModel = new this.EntityModel({ ...createDto });
-    return entityModel.save();
+    const entity = this.repository.create(createDto);
+    return this.repository.save(entity);
   }
 
   async update(
@@ -80,6 +77,10 @@ export abstract class BaseService<Entity, T extends BaseOutputDto> {
   }
 
   async updateRecord(updateDto: BaseInputDto, id: string): Promise<Entity> {
+    const record = await this.repository.findOne(id);
+    console.log(record);
+    console.log(id);
+    console.log(updateDto);
     await this.repository.update(id, updateDto);
     return await this.repository.findOne(id);
   }

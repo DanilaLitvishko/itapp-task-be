@@ -1,5 +1,5 @@
-import { BaseOutputDto } from 'src/modules/base/dto/base-output.dto';
-import { User } from 'src/modules/common/entities/user.entity';
+import { BaseOutputDto } from '../../base/dto/base-output.dto';
+import { User } from 'src/modules/common/entities/users/user.entity';
 import { UserResponseDto } from 'src/modules/common/dto/users/user-response.dto';
 import { UserSubscriptionResponseDto } from 'src/modules/common/dto/users/user-subscription-response.dto';
 

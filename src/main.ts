@@ -13,11 +13,12 @@ async function bootstrap() {
   // const configService = app.get('ConfigService');
   app.useGlobalPipes(new ValidationPipe());
   // app.enableCors({ origin: configService.internalConfig.frontendDomain });
+  app.enableCors();
   app.use(helmet());
   app.use(async (req: any) => {
     RequestContextClass.setRequest(req);
     return req.next();
   });
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();

@@ -12,7 +12,6 @@ export const DONT_PROVIDE_EMAIL_FOR_SIGN_UP = `Social network don't provide emai
 export const INVALID_PRODUCT_TYPE = 'Invalid product type.';
 export const NO_CREDIT_CARD_DATA = 'No credit card data.';
 export const ALREADY_SUBSCRIBED = 'Active subscription already exists.';
-export const NO_CONNECTION_ELASTIC_SEARCH = `Can't connect to elastic search.`;
 export const PRODUCT_NOT_FOUND = 'Product not found';
 export const USERS_NOT_CHATROOM_MEMBER = 'Some of the users are not chatroom members';
 export const CHATROOM_USERS_ALREADY_ADDED = 'Some of the users already added';

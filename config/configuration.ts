@@ -4,7 +4,6 @@ import * as jwtConfig from 'config/jwt';
 import * as mailgunConfig from 'config/mailgun';
 import * as pubnubConfig from 'config/pubnub';
 import * as stripeConfig from 'config/stripe';
-import * as elasticSearchConfig from 'config/elastic-search';
 
 dotenv.config();
 
@@ -17,5 +16,4 @@ export default () => ({
   mailgun: mailgunConfig[env],
   pubnub: pubnubConfig[env],
   stripe: stripeConfig[env],
-  elasticSearch: elasticSearchConfig[env],
 });

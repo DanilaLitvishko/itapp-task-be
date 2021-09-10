@@ -8,11 +8,14 @@ export class createUserTable1630667288021 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'uuid',
             isPrimary: true,
+            isUnique: true,
+            isGenerated: true,
+            generationStrategy: 'uuid',
           },
           {
-            name: 'username',
+            name: 'email',
             type: 'varchar',
           },
           {
@@ -20,12 +23,19 @@ export class createUserTable1630667288021 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'confirmationCode',
-            type: 'varchar',
-          },
-          {
             name: 'isConfirm',
             type: 'boolean',
+            isNullable: true,
+          },
+          {
+            name: 'createdAt',
+            type: 'date',
+            isNullable: true,
+          },
+          {
+            name: 'accessTokenCreatedAt',
+            type: 'date',
+            isNullable: true,
           },
         ],
       }),
